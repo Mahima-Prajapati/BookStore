@@ -15,20 +15,20 @@ type Book struct {
 }
 
 func init() {
-	config.Connect()
+	config.ConnectDB()
 	db = config.GetDB()
 	db.AutoMigrate(&Book{})
 }
 
-func (b *Book) CreateBook() *Book {
-	db.Create(b)
-	return b
+func CreateBook(b Book) *Book {
+	db.Create(&b)
+	return &b
 }
 
 func GetAllBooks() []Book {
-	var Books []Book
-	db.Find(&Books)
-	return Books
+	var books []Book
+	db.Find(&books)
+	return books
 }
 
 func GetBookById(id int64) (*Book, *gorm.DB) {
